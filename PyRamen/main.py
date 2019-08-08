@@ -1,12 +1,18 @@
+# PyRamen Homework
+# Import csv and Path
 import csv
 from pathlib import Path
 
+# Create file_paths for menu and sales data
 menu_filepath = Path('../Desktop/RU-HOU-FIN-PT-07-2019-U-C/hw/02-Python/Instructions/PyRamen/Resources/menu_data.csv')
 sales_filepath = Path('../Desktop/RU-HOU-FIN-PT-07-2019-U-C/hw/02-Python/Instructions/PyRamen/Resources/sales_data.csv')
 
+# Initialize empty lists for menu and sales data
 
 menu = []
 sales = []
+
+# Append rows to menu list
 
 with open(menu_filepath,'r') as menu_file:
     csvreader1 = csv.reader(menu_file, delimiter = ',')
@@ -14,15 +20,22 @@ with open(menu_filepath,'r') as menu_file:
     for row in csvreader1 : 
         menu.append(row)
 
+#Append rows to sales list
+
 with open(sales_filepath,'r') as sales_file:
     csvreader2 = csv.reader(sales_file, delimiter = ',')
     header = next(csvreader2)
     for row in csvreader2 :
         sales.append(row)      
 
+# Initialize empty dict and quantity variable 
 
 report = {}
 quantity = 0
+
+# Create report in first loop over sales list, then update report in nested loop
+# with the values for count,revenue,cogs, and profit 
+
 for record in sales :
     quantity += int(record[3])
     sales_item = record[4]     
@@ -40,5 +53,12 @@ for record in sales :
         else :
             #print(f"{sales_item} does not equal {item}! NO MATCH!")
             continue
-print(report)   
+            
+
+# Write contents of report to text file
+
+output_path = 'PyRamen_report.txt'
+
+with open(output_path, 'w') as file:
+    file.write(f"{report}")
 
